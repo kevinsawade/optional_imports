@@ -1,0 +1,18 @@
+stages:
+  - test
+  - deplodddy
+
+image: python:3.8.5
+
+before_script:
+  - export PYTHONPATH=src
+  - python3 --version
+  - pip install numpy
+
+test:
+  stage: test
+  script:
+    - ls
+    - python -m unittest discover -s tests -v
+  only:
+    - main

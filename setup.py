@@ -3,18 +3,17 @@ import os
 import re
 
 # read _version.py to have a single source file for version.
-exec(open('encodermap/_version.py').read())
+exec(open('opt_imports/_version.py').read())
 
 # setup
-setup(name='package_with_optional_packages',
+setup(name='opt_imports',
       version=__version__,
       description='Example Python Library with optional packages, that inform the user about missing dependencies.',
       author='Kevin Sawade',
       url="https://github.com/AG-Peter/encodermap",
-      packages=['package_with_optional_packages'],
+      packages=['opt_imports'],
       install_requires=[
-          'numpy',
-          'matplotlib',
+          'numpy'
       ],
       classifiers=[
           "Programming Language :: Python :: 3",
