@@ -10,7 +10,7 @@ setup(name='opt_imports',
       version=__version__,
       description='Example Python Library with optional packages, that inform the user about missing dependencies.',
       author='Kevin Sawade',
-      url="https://github.com/AG-Peter/encodermap",
+      url="https://gitlab.inf.uni-konstanz.de/kevin.sawade/optional_packages",
       packages=['opt_imports'],
       install_requires=[
           'numpy'
