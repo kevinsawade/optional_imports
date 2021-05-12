@@ -65,5 +65,6 @@ jobs:
           gistID: c8f263678e4e1f57994fa049a83a85ab
           filename: test.json
           label: Coverage
+          namedLogo: Codecov
           message: ${{ env.Percent }}
           color: ${{ env.CoLoR }}
