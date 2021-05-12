@@ -11,3 +11,8 @@ Small package that shows how to handle optional imports in python.
 ```bash
 $ pip install .
 ```
+
+# Todo
+* JupyterHub
+* Awesome Badges
+* Gif
