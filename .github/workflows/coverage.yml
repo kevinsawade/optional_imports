@@ -57,8 +57,8 @@ jobs:
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
-          gistID: 9ce4c97f4bcd36e9682e3909cd3e39f10fea0bf5
+          gistID: c8f263678e4e1f57994fa049a83a85ab
           filename: test.json
-          label: "🛡️ coverage"
-          message: "80"
-          color: green
+          label: Hello
+          message: World
+          color: orange
