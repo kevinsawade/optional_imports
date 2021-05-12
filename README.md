@@ -3,6 +3,7 @@
 ![Test](https://github.com/kevinsawade/optional_imports/actions/workflows/test.yml/badge.svg)
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/kevinsawade/c8f263678e4e1f57994fa049a83a85ab/raw/test.json)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kevinsawade/optional_imports/blob/main/examples.ipynb)
 
 
 Small package that shows how to handle optional imports in python.
