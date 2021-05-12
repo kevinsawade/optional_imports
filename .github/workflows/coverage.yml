@@ -53,7 +53,7 @@ jobs:
           elif [[ "$COV" -gt 80 ]] ; then
             COLOR=green
           else
-            color=orange
+            COLOR=orange
           fi
           echo $COLOR
           echo "::set-env name=Color::$COLOR"
