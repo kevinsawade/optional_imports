@@ -38,10 +38,3 @@ Import will be postoned and an error will be raised if the module is not install
 ...     print(e)
 Install the `nonexistent_package` package to make use of this feature.
 ```
-
-
-
-# Todo
-* JupyterHub
-* Awesome Badges
-* Gif
