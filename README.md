@@ -10,6 +10,10 @@ Small package that shows how to handle optional imports in python.
 
 Wget the file https://raw.githubusercontent.com/kevinsawade/optional_imports/main/opt_imports/optional_imports.py and put it into your package.
 
+```bash
+$ wget https://raw.githubusercontent.com/kevinsawade/optional_imports/main/opt_imports/optional_imports.py
+```
+
 # Usage
 
 Import optional packages as such:
