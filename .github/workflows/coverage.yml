@@ -56,7 +56,7 @@ jobs:
             COLOR=orange
           fi
           echo $COLOR
-          echo "::set-env name=Color::$COLOR"
+          echo "::set-env name=CoLoR::$COLOR"
           
       - name: Create Awesome Badge
         uses: schneegans/dynamic-badges-action@v1.0.0
@@ -64,6 +64,6 @@ jobs:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: c8f263678e4e1f57994fa049a83a85ab
           filename: test.json
-          label: 🛡️ Coverage
+          label: "%F0%9F%9B%A1%EF%B8%8F%20Coverage"
           message: ${{ env.Percent }}
-          color: ${{ env.Color }}
+          color: ${{ env.CoLoR }}
