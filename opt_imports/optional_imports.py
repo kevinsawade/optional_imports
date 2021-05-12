@@ -71,7 +71,7 @@ def _optional_import(module: str, name: str = None, version: str = None):
             return module
         return getattr(module, name)
     except ImportError as e:
-        if version is None:
+        if version is not None:
             msg = f"Install the `{module}` package with version `{version}` to make use of this feature."
         else:
             msg = f"Install the `{module}` package to make use of this feature."
