@@ -6,11 +6,33 @@
 Small package that shows how to handle optional imports in python.
 
 
-# Installation
+# Set Up
 
-```bash
-$ pip install .
+Wget the file https://raw.githubusercontent.com/kevinsawade/optional_imports/main/opt_imports/optional_imports.py and put it into your package.
+
+# Usage
+
+Import optional packages as such:
+
+```python
+from optional_imports import _optional_import
+pd = _optional_import('pandas')
+plt = _optional_import('matplotlib', 'pyplot')
+random_array = _optional_import('numpy', 'random.random')
+nonexistent = _optional_import('nonexistent_package')
 ```
+
+Import will be postoned and an error will be raised if the module is not installed.
+
+```python
+>>> try:
+...     nonexistent.function()
+... except ValueError as e:
+...     print(e)
+Install the `nonexistent_package` package to make use of this feature.
+```
+
+
 
 # Todo
 * JupyterHub
