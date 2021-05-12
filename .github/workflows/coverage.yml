@@ -46,12 +46,12 @@ jobs:
           coverage run -m unittest discover -s tests
           PERCENT=$( coverage report -m | tail -1 | awk '{print $4}' )
           echo "::set-env name=Percent::$PERCENT"
-          if (( $(echo "$PERCENT <= 50" | bc -l) )) ; then
+          if [ "$PERCENT" -le 50 ] ; then
             COLOR=red
-          elif (( $(echo "$PERCENT > 80" | bc -l) )); then
+          elif [ "$PERCENT" -gt 80 ] ; then
             COLOR=green
           else
-            COLOR=orange
+            color=orange
           fi
           echo "::set-env name=Color::$COLOR"
           
