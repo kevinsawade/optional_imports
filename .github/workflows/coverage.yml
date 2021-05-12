@@ -46,14 +46,16 @@ jobs:
           coverage run -m unittest discover -s tests
           PERCENT=$( coverage report -m | tail -1 | awk '{print $4}' )
           COV=$( coverage report -m | tail -1 | awk '{print $4}' | sed 's/%//g' )
+          echo $COV
           echo "::set-env name=Percent::$PERCENT"
-          if [ "$COV" -le 50 ] ; then
+          if [[ "$COV" -le 50 ]] ; then
             COLOR=red
-          elif [ "$COV" -gt 80 ] ; then
+          elif [[ "$COV" -gt 80 ]] ; then
             COLOR=green
           else
             color=orange
           fi
+          echo $COLOR
           echo "::set-env name=Color::$COLOR"
           
       - name: Create Awesome Badge
