@@ -115,3 +115,4 @@ dmypy.json
 .pyre/
 nohup*
 .conda
+optional_imports.py
