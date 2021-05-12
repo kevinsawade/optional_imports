@@ -59,10 +59,7 @@ Examples:
            [16., 19.,  6., 14., 18.]])
 
 """
-
-PACKAGE_VERSION_MAPPING = {'xarray': '>=0.17.0'}
-
-def _optional_import(module: str, name: str = None):
+def _optional_import(module: str, name: str = None, version: str = None):
     import importlib
     try:
         module = importlib.import_module(module)
@@ -74,10 +71,9 @@ def _optional_import(module: str, name: str = None):
             return module
         return getattr(module, name)
     except ImportError as e:
-        try:
-            version = PACKAGE_VERSION_MAPPING[module]
+        if version is None:
             msg = f"Install the `{module}` package with version `{version}` to make use of this feature."
-        except KeyError:
+        else:
             msg = f"Install the `{module}` package to make use of this feature."
 
         import_error = e
