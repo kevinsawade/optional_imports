@@ -58,7 +58,7 @@ jobs:
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: c8f263678e4e1f57994fa049a83a85ab
-          filename: optional_imports_badge.json
+          filename: test.json
           label: "🛡️ coverage"
-          message: "80%"
+          message: "80"
           color: green
