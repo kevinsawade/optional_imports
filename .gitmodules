@@ -1,4 +1,0 @@
-[submodule "opt_imports/sub_project"]
-	path = opt_imports/sub_project
-	url = https://github.com/kevinsawade/sub_project_for_optional_imports.git
-	branch = just_code
