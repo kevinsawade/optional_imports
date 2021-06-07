@@ -3,8 +3,8 @@ import unittest
 test_cases = ()
 
 import doctest
-from import_main_project import optional_imports_module
-doc_tests = (doctest.DocTestSuite(optional_imports_module), )
+from opt_imports import optional_imports
+doc_tests = (doctest.DocTestSuite(optional_imports), )
 
 def load_tests(loader, tests, patter):
     suite = unittest.TestSuite()

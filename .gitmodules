@@ -1,3 +1,0 @@
-[submodule ".submodules/sub_project_for_optional_imports"]
-	path = .submodules/sub_project_for_optional_imports
-	url = git@github.com:kevinsawade/sub_project_for_optional_imports.git
