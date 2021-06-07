@@ -61,6 +61,7 @@ Examples:
 """
 def _optional_import(module: str, name: str = None, version: str = None):
     import importlib
+    _module = module
     try:
         module = importlib.import_module(module)
         if name is None:
@@ -70,11 +71,22 @@ def _optional_import(module: str, name: str = None, version: str = None):
                 module = getattr(module, i)
             return module
         return getattr(module, name)
-    except (ImportError, AttributeError) as e:
+    except ImportError as e:
+        # import failed
         if version is not None:
-            msg = f"Install the `{module}` package with version `{version}` to make use of this feature."
+            msg = f"Install the `{_module}` package with version `{version}` to make use of this feature."
         else:
-            msg = f"Install the `{module}` package to make use of this feature."
+            msg = f"Install the `{_module}` package to make use of this feature."
+    except AttributeError as e:
+        # absolute import failed. Try relative import
+        try:
+            module_name = '.' + name.split('.')[-2]
+            object_name = name.split('.')[-1]
+            path = _module + '.' + '.'.join(name.split('.')[:-2])
+            module = importlib.import_module(module_name, path)
+            return getattr(module, object_name)
+        except Exception as e2:
+            msg = f"Absolute and relative import of {name} from module {_module} failed with Exception {e2}. Either install the `{_module}` package or fix the optional_import."
 
         import_error = e
 
