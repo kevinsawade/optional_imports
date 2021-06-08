@@ -9,6 +9,9 @@
 
 Small package that shows how to handle optional imports in python.
 
+# Try it out in Google Colab
+
+https://colab.research.google.com/github/kevinsawade/optional_imports/blob/main/examples.ipynb
 
 # Set Up
 
