@@ -39,7 +39,7 @@ ToDo:
 """
 
 
-def _optional_import(module: str, name: str = None, version: str = None, auto_install: bool = False):
+def _optional_import(module: str, name: str = None, version: str = None, auto_install: bool = False, user_install: bool = False):
     """Function that allows optional imports.
 
     This function can be provided with a str, denoting a module name (like 'numpy')
@@ -69,6 +69,8 @@ def _optional_import(module: str, name: str = None, version: str = None, auto_in
             is not included in the Exception. Defaults to None.
         auto_install (bool, optional): Whether to automatically install packages using subprocess and sys.
             Defaults to False.
+        user_install (bool, optional): Prompts the user, whether they want to install the missing package.
+            Defaults to False.
 
     Examples:
         >>> from optional_imports import _optional_import
@@ -94,15 +96,15 @@ def _optional_import(module: str, name: str = None, version: str = None, auto_in
                [ 8., 14.,  4., 18.,  1.],
                [13.,  8., 11.,  3.,  4.],
                [16., 19.,  6., 14., 18.]])
-        >>> Dense = _optional_import('tensorflow', 'keras.layers.Dense')
-        >>> class MyLayer(Dense):
-        ...     def __init__(n_neurons, *args, **kwargs):
-        ...         super().__init__(n_neurons, *args, **kwargs)
+        >>> NonexistentClass = _optional_import('nonexistent_package', 'sub.module.NonexistentClass')
+        >>> class MyClass(NonexistentClass):
+        ...     def __init__(*args, **kwargs):
+        ...         super().__init__()
         >>> try:
-        ...     layer = MyLayer(50)
+        ...     layer = MyClass(50)
         ... except ValueError as e:
         ...     print(e)
-        Install the `tensorflow` package to make use of this feature.
+        Install the `nonexistent_package` package to make use of this feature.
         >>> pd = _optional_import('pandas', auto_install=True)
         >>> pd.isna('dog')
         False
@@ -125,6 +127,7 @@ def _optional_import(module: str, name: str = None, version: str = None, auto_in
             msg = f"Install the `{_module}` package with version `{version}` to make use of this feature."
         else:
             msg = f"Install the `{_module}` package to make use of this feature."
+        import_error = e
     except AttributeError as e:
         # absolute import failed. Try relative import
         try:
@@ -135,9 +138,28 @@ def _optional_import(module: str, name: str = None, version: str = None, auto_in
             return getattr(module, object_name)
         except Exception as e2:
             msg = f"Absolute and relative import of {name} from module {_module} failed with Exception {e2}. Either install the `{_module}` package or fix the optional_import."
-
         import_error = e
 
+    # install packages
+    if isinstance(import_error, Exception) and auto_install and not user_install:
+        import sys, subprocess
+        try:
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', _module])
+            return _optional_import(_module, name, version)
+        except subprocess.CalledProcessError as grepexc:
+            msg = f"The `auto_install` option was set to True, but pip could not install the {_module} package and failed with ExitCode {grepexc}."
+
+    # if user prompt
+    if isinstance(import_error, Exception) and not auto_install and user_install:
+        import sys, subprocess
+        user_inp = input(f"Do you want to install the {_module} package to use this feature? (y/n)")
+        if user_inp == 'y' or user_inp == 'yes':
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', _module])
+            return _optional_import(_module, name, version)
+        else:
+            msg = f"User chose to not innstall the {_module} package"
+
+    # failed import class closure
     class _failed_import:
         def __init__(self, *args, **kwargs):
             pass
