@@ -15,16 +15,16 @@ https://colab.research.google.com/github/kevinsawade/optional_imports/blob/main/
 # Install
 
 ```bash
-$ pip install optional_imports
+$ pip install optional-imports
 ```
 or, if you are working with virtual environments.
 ```bash
-$ pip install --user optional_requirements
+$ pip install --user optional-imports
 ```
 
 # Single File Set Up
 
-Wget the file https://raw.githubusercontent.com/kevinsawade/optional_imports/main/opt_imports/optional_imports.py and put it into your package.
+This package contains only a single Foley which can be used as a standalone. You can download the file with `wget` and put it into your project.
 
 ```bash
 $ wget https://raw.githubusercontent.com/kevinsawade/optional_imports/main/opt_imports/optional_imports.py
@@ -51,3 +51,4 @@ Import will be postoned and an error will be raised if the module is not install
 ...     print(e)
 Install the `nonexistent_package` package to make use of this feature.
 ```
+See the Examples section in `_optional_import`'s docstring for more examples.
