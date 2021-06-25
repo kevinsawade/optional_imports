@@ -24,7 +24,7 @@ $ pip install --user optional-imports
 
 # Single File Set Up
 
-This package contains only a single Foley which can be used as a standalone. You can download the file with `wget` and put it into your project.
+This package contains only a single file which can be used as a standalone. You can download the file with `wget` and put it into your project.
 
 ```bash
 $ wget https://raw.githubusercontent.com/kevinsawade/optional_imports/main/opt_imports/optional_imports.py
