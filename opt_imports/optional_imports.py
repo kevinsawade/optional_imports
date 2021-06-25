@@ -28,37 +28,86 @@
 #
 # Find the GNU Lesser General Public License under <http://www.gnu.org/licenses/>.
 """Optional imports of python packages.
+
+This module only contains one function. Look at the docstring of
+`_optional_import` for more info.
+
 ToDo:
     * Interactively installing missing packages
     * More Examples
-Examples:
-    >>> from encodermap._optional_imports import _optional_import
-    >>> np = _optional_import('numpy')
-    >>> np.array([1, 2, 3])
-    array([1, 2, 3])
-    >>> nonexistent = _optional_import('nonexistent_package')
-    >>> try:
-    ...     nonexistent.function()
-    ... except ValueError as e:
-    ...     print(e)
-    Install the `nonexistent_package` package to make use of this feature.
-    >>> try:
-    ...     _ = nonexistent.variable
-    ... except ValueError as e:
-    ...     print(e)
-    Install the `nonexistent_package` package to make use of this feature.
-    >>> numpy_random = _optional_import('numpy', 'random.random')
-    >>> np.random.seed(1)
-    >>> np.round(numpy_random((5, 5)) * 20, 0)
-    array([[ 8., 14.,  0.,  6.,  3.],
-           [ 2.,  4.,  7.,  8., 11.],
-           [ 8., 14.,  4., 18.,  1.],
-           [13.,  8., 11.,  3.,  4.],
-           [16., 19.,  6., 14., 18.]])
+
 """
 
 
-def _optional_import(module: str, name: str = None, version: str = None):
+def _optional_import(module: str, name: str = None, version: str = None, auto_install: bool = False):
+    """Function that allows optional imports.
+
+    This function can be provided with a str, denoting a module name (like 'numpy')
+    and if numpy is available it will return the module `np = _optional_import('numpy')`.
+
+    If the package is not availabe (`import numpy` raises `ModuleNotFoundError`), a class
+    is returned, that raises an Exception once, the class is called `()`, or an attribute
+    of the class `getattr()` is tried to be accessed.
+
+    This also works with OOP class inheritance. So you can use _optional_import for
+    constructing sub-classes of packages that might be available.
+
+    Args:
+        module (str): The string of the module. The string is caps sensitive. So for
+            MDAnalysis, `module` should be 'MDAnalysis'. Another example is 'Biopython'.
+
+    Keyword Args:
+        name (str, optional): The name that is tried to be access from the module. If you
+            want to use the function `random()` from numpy's random module, `name` should be
+            'random.random'. This can also work for very long imports. For Dense layers
+            from tensorflow import you would give `module` 'tensorflow' and `name`
+            'keras.layers.Dense'. If None is provided this function will not
+            be used and the base module will be returned. Defaults to None.
+        version (str, optional): An optional version of the package. Will only be used, when
+            the optional import fails and will inform the user, that a certain version needs
+            to be installed. If None is provided, the version of the module
+            is not included in the Exception. Defaults to None.
+        auto_install (bool, optional): Whether to automatically install packages using subprocess and sys.
+            Defaults to False.
+
+    Examples:
+        >>> from optional_imports import _optional_import
+        >>> np = _optional_import('numpy')
+        >>> np.array([1, 2, 3])
+        array([1, 2, 3])
+        >>> nonexistent = _optional_import('nonexistent_package')
+        >>> try:
+        ...     nonexistent.function()
+        ... except ValueError as e:
+        ...     print(e)
+        Install the `nonexistent_package` package to make use of this feature.
+        >>> try:
+        ...     _ = nonexistent.variable
+        ... except ValueError as e:
+        ...     print(e)
+        Install the `nonexistent_package` package to make use of this feature.
+        >>> numpy_random = _optional_import('numpy', 'random.random')
+        >>> np.random.seed(1)
+        >>> np.round(numpy_random((5, 5)) * 20, 0)
+        array([[ 8., 14.,  0.,  6.,  3.],
+               [ 2.,  4.,  7.,  8., 11.],
+               [ 8., 14.,  4., 18.,  1.],
+               [13.,  8., 11.,  3.,  4.],
+               [16., 19.,  6., 14., 18.]])
+        >>> Dense = _optional_import('tensorflow', 'keras.layers.Dense')
+        >>> class MyLayer(Dense):
+        ...     def __init__(n_neurons, *args, **kwargs):
+        ...         super().__init__(n_neurons, *args, **kwargs)
+        >>> try:
+        ...     layer = MyLayer(50)
+        ... except ValueError as e:
+        ...     print(e)
+        Install the `tensorflow` package to make use of this feature.
+        >>> pd = _optional_import('pandas', auto_install=True)
+        >>> pd.isna('dog')
+        False
+
+    """
     import importlib
     _module = module
     try:
@@ -76,7 +125,6 @@ def _optional_import(module: str, name: str = None, version: str = None):
             msg = f"Install the `{_module}` package with version `{version}` to make use of this feature."
         else:
             msg = f"Install the `{_module}` package to make use of this feature."
-        import_error = e
     except AttributeError as e:
         # absolute import failed. Try relative import
         try:
