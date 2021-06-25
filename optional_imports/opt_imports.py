@@ -32,10 +32,6 @@
 This module only contains one function. Look at the docstring of
 `_optional_import` for more info.
 
-ToDo:
-    * Interactively installing missing packages
-    * More Examples
-
 """
 
 
@@ -45,15 +41,18 @@ def _optional_import(module: str, name: str = None, version: str = None, auto_in
     This function can be provided with a str, denoting a module name (like 'numpy')
     and if numpy is available it will return the module `np = _optional_import('numpy')`.
 
-    If the package is not availabe (`import numpy` raises `ModuleNotFoundError`), a class
-    is returned, that raises an Exception once, the class is called `()`, or an attribute
-    of the class `getattr()` is tried to be accessed.
+    If the package is not availabe (`import some_package` would normally raise `ModuleNotFoundError`),
+    a class is returned instead of the package. This class raises an Exception when it is called `()`,
+    or an attribute of the class `getattr()` is accessed. This postpones the import error
+    and allows to use optional packages for code libraries that would otherwise have
+    long lists of dependencies.
 
     This also works with OOP class inheritance. So you can use _optional_import for
-    constructing sub-classes of packages that might be available.
+    constructing sub-classes of classes from other packages that might or
+    might not be available.
 
     Args:
-        module (str): The string of the module. The string is caps sensitive. So for
+        module (str): The string of the module. The string is case sensitive. So for
             MDAnalysis, `module` should be 'MDAnalysis'. Another example is 'Biopython'.
 
     Keyword Args:
