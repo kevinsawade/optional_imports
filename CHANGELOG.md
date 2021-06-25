@@ -21,3 +21,5 @@ Added:
 
 Changed:
     - Docstring now part of `_optional_import` function.
+
+[1.0.2] - 2021-06-25 - Increased version number to check github to PyPI workflow
