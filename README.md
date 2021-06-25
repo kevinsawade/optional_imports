@@ -4,7 +4,6 @@
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/kevinsawade/c8f263678e4e1f57994fa049a83a85ab/raw/test.json)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kevinsawade/optional_imports/blob/main/examples.ipynb)
-![Test Submodules](https://github.com/kevinsawade/optional_imports/actions/workflows/test_git_subproject.yml/badge.svg?branch=branch_w_git_submodules)
 
 
 Small package that shows how to handle optional imports in python.
@@ -13,7 +12,17 @@ Small package that shows how to handle optional imports in python.
 
 https://colab.research.google.com/github/kevinsawade/optional_imports/blob/main/examples.ipynb
 
-# Set Up
+# Install
+
+```bash
+$ pip install optional_imports
+```
+or, if you are working with virtual environments.
+```bash
+$ pip install --user optional_requirements
+```
+
+# Single File Set Up
 
 Wget the file https://raw.githubusercontent.com/kevinsawade/optional_imports/main/opt_imports/optional_imports.py and put it into your package.
 
