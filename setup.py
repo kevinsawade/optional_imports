@@ -12,9 +12,7 @@ setup(name='opt_imports',
       author='Kevin Sawade',
       url="https://gitlab.inf.uni-konstanz.de/kevin.sawade/optional_packages",
       packages=['opt_imports'],
-      install_requires=[
-          'numpy'
-      ],
+      install_requires=[],
       classifiers=[
           "Programming Language :: Python :: 3",
           "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

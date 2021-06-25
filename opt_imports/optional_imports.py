@@ -28,13 +28,11 @@
 #
 # Find the GNU Lesser General Public License under <http://www.gnu.org/licenses/>.
 """Optional imports of python packages.
-
 ToDo:
     * Interactively installing missing packages
     * More Examples
-
 Examples:
-    >>> from opt_imports.optional_imports import _optional_import
+    >>> from encodermap._optional_imports import _optional_import
     >>> np = _optional_import('numpy')
     >>> np.array([1, 2, 3])
     array([1, 2, 3])
@@ -57,10 +55,12 @@ Examples:
            [ 8., 14.,  4., 18.,  1.],
            [13.,  8., 11.,  3.,  4.],
            [16., 19.,  6., 14., 18.]])
-
 """
+
+
 def _optional_import(module: str, name: str = None, version: str = None):
     import importlib
+    _module = module
     try:
         module = importlib.import_module(module)
         if name is None:
@@ -71,24 +71,42 @@ def _optional_import(module: str, name: str = None, version: str = None):
             return module
         return getattr(module, name)
     except ImportError as e:
+        # import failed
         if version is not None:
-            msg = f"Install the `{module}` package with version `{version}` to make use of this feature."
+            msg = f"Install the `{_module}` package with version `{version}` to make use of this feature."
         else:
-            msg = f"Install the `{module}` package to make use of this feature."
+            msg = f"Install the `{_module}` package to make use of this feature."
+        import_error = e
+    except AttributeError as e:
+        # absolute import failed. Try relative import
+        try:
+            module_name = '.' + name.split('.')[-2]
+            object_name = name.split('.')[-1]
+            path = _module + '.' + '.'.join(name.split('.')[:-2])
+            module = importlib.import_module(module_name, path)
+            return getattr(module, object_name)
+        except Exception as e2:
+            msg = f"Absolute and relative import of {name} from module {_module} failed with Exception {e2}. Either install the `{_module}` package or fix the optional_import."
 
         import_error = e
 
-        class _failed_import:
-            def __init__(self, *args, **kwargs):
-                pass
+    class _failed_import:
+        def __init__(self, *args, **kwargs):
+            pass
 
-            def __call__(self, *args, **kwargs):
-                raise ValueError(msg) from import_error
+        def __call__(self, *args, **kwargs):
+            raise ValueError(msg) from import_error
 
-            def __getattribute__(self, *args, **kwargs):
-                raise ValueError(msg) from import_error
+        def __getattribute__(self, name):
+            # if class is base class for some other class
+            if name == '__mro_entries__':
+                return object.__getattribute__(self, name)
+            raise ValueError(msg) from import_error
 
-            def __getattr__(self, *args, **kwargs):
-                raise ValueError(msg) from import_error
+        def __getattr__(self, name):
+            # if class is base class for some other class
+            if name == '__mro_entries__':
+                return object.__getattribute__(self, name)
+            raise ValueError(msg) from import_error
 
-        return _failed_import()
+    return _failed_import()
