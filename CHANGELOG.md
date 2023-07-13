@@ -23,3 +23,7 @@ Changed:
     - Docstring now part of `_optional_import` function.
 
 [1.0.2] - 2021-06-25 - Increased version number to check github to PyPI workflow
+
+[1.0.3] - 2023-06-13
+
+Fixed issue with relative imports. Version 1.0.2 could not do `Client = optional_import("dask", "distributed.Client")`. This is now possible.

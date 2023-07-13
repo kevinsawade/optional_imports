@@ -33,9 +33,16 @@ This module only contains one function. Look at the docstring of
 `_optional_import` for more info.
 
 """
+from __future__ import annotations
+from typing import Any
 
-
-def _optional_import(module: str, name: str = None, version: str = None, auto_install: bool = False, user_install: bool = False):
+def _optional_import(
+    module: str,
+    name: str = None,
+    version: str = None,
+    auto_install: bool = False,
+    user_install: bool = False,
+) -> Any:
     """Function that allows optional imports.
 
     This function can be provided with a str, denoting a module name (like 'numpy')
@@ -133,6 +140,7 @@ def _optional_import(module: str, name: str = None, version: str = None, auto_in
             module_name = '.' + name.split('.')[-2]
             object_name = name.split('.')[-1]
             path = _module + '.' + '.'.join(name.split('.')[:-2])
+            path = path.rstrip(".")
             module = importlib.import_module(module_name, path)
             return getattr(module, object_name)
         except Exception as e2:
