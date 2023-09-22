@@ -3,12 +3,27 @@
 DateFormat: yyyy-mm-dd
 SemanticVersioning.
 
-[1.0.0] - 2021-15-10 Relase
+[1.0.4] - 2023-09-22
 
-Release. Class inheritance did not work in that version.
-Using statements like `from package.subpackage.subpackage.subpackage._hidden import _hiddenClass` did not work.
-This was because only the getattr() method was used, but some objetcs are not accessible that way.
-That's what the from X.Y.Z import Class syntax was for.
+Fixed issue with some imports. If absolute and relative import fails like with:
+
+```python
+import dask.array as da
+```
+
+a line running:
+
+```python
+return importlib.import_module("..array", "dask.array")
+```
+
+is triggered.
+
+[1.0.3] - 2023-06-13
+
+Fixed issue with relative imports. Version 1.0.2 could not do `Client = optional_import("dask", "distributed.Client")`. This is now possible.
+
+[1.0.2] - 2021-06-25 - Increased version number to check github to PyPI workflow
 
 [1.0.1] - 2021-06-25 - Installation on-the-fly and Class inhertiance.
 
@@ -22,8 +37,9 @@ Added:
 Changed:
     - Docstring now part of `_optional_import` function.
 
-[1.0.2] - 2021-06-25 - Increased version number to check github to PyPI workflow
+[1.0.0] - 2021-15-10 Relase
 
-[1.0.3] - 2023-06-13
-
-Fixed issue with relative imports. Version 1.0.2 could not do `Client = optional_import("dask", "distributed.Client")`. This is now possible.
+Release. Class inheritance did not work in that version.
+Using statements like `from package.subpackage.subpackage.subpackage._hidden import _hiddenClass` did not work.
+This was because only the getattr() method was used, but some objetcs are not accessible that way.
+That's what the from X.Y.Z import Class syntax was for.

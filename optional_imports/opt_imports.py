@@ -144,7 +144,14 @@ def _optional_import(
             module = importlib.import_module(module_name, path)
             return getattr(module, object_name)
         except Exception as e2:
-            msg = f"Absolute and relative import of {name} from module {_module} failed with Exception {e2}. Either install the `{_module}` package or fix the optional_import."
+            msg = (f"Absolute and relative import of {name} from module {_module} "
+                   f"failed with Exception {e2}. Either install the `{_module}` "
+                   f"package or fix the optional_import.")
+            try:
+                return importlib.import_module(".." + name, _module + "." + name)
+            except Exception as e3:
+                msg += (f"Also trying to run `importlib(..{name}, {_module}.{name})` "
+                        f"did not succeed with error: {e3}.")
         import_error = e
 
     # install packages
